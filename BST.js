@@ -13,11 +13,13 @@ class BinarySearchTree {
 
     insert(value) {
         const newNode = new Node(value)
+        
         if (!this.root) {
             this.root = newNode
             // return this
         } else {
             let currentNode = this.root
+
             while (true) {
                 if (value > currentNode.value) {
                     if (!currentNode.right) {
@@ -45,6 +47,7 @@ class BinarySearchTree {
             return false
         } else {
             let currentNode = this.root
+
             while(currentNode) {
                 if (currentNode.value === value) {
                     return true
@@ -62,8 +65,8 @@ class BinarySearchTree {
         if (!this.root) {
             return 'empty'
         } else if (this.root.value === value) {
-            console.log('called root value')
             const childCount = this.childChecker(this.root)
+
             switch(childCount) {
                 case 0:
                     this.root = null
@@ -75,15 +78,16 @@ class BinarySearchTree {
                 case 2:
                     const successorNode = this.succesor(this.root)
                     const otherNode = this.root.left
+                    const successorParent = this.succesorParent(this.root)
 
                     if (this.root.right.value != successorNode.value) {
                         if (successorNode.right) {
-                            const successorParent = this.succesorParent(this.root)
                             const succesorChild =  successorNode.right
                             successorParent.left = succesorChild
+                        } else {
+                            successorParent.left = null
                         }
                         successorNode.right = this.root.right
-                        
                     }
 
                     successorNode.left = otherNode
@@ -93,30 +97,31 @@ class BinarySearchTree {
             return this
         } else {
             let leadNode = this.root
+
             while(true) {
                 if (leadNode.right && leadNode.right.value === value) {
-                    console.log('called top right')
                     let currentNode = leadNode.right
                     const childCount = this.childChecker(currentNode)
+
                     switch(childCount) {
                         case 0:
-                            console.log('no child')
                             leadNode.right = null
                             break
                         case 1:
-                            console.log('bypass')
                             const replaceNode = this.bypass(currentNode)
                             leadNode.right = replaceNode
                             break
                         case 2:
                             const successorNode = this.succesor(currentNode)
                             const otherNode = currentNode.left
+                            const successorParent = this.succesorParent(currentNode)
 
                             if (currentNode.right.value != successorNode.value) {
                                 if (successorNode.right) {
-                                    const successorParent = this.succesorParent(currentNode)
                                     const succesorChild =  successorNode.right
                                     successorParent.left = succesorChild
+                                } else {
+                                    successorParent.left = null
                                 }
                                 successorNode.right = currentNode.right
                             }
@@ -127,28 +132,28 @@ class BinarySearchTree {
                     }
                     return this
                 } else if (leadNode.left && leadNode.left.value === value) {
-                    console.log('called top left')
                     let currentNode = leadNode.left
                     const childCount = this.childChecker(currentNode)
+                    
                     switch(childCount) {
                         case 0:
-                            console.log('no child')
                             leadNode.left = null
                             break
                         case 1:
-                            console.log('bypass')
                             const replaceNode = this.bypass(currentNode)
                             leadNode.left = replaceNode
                             break
                         case 2:
                             const successorNode = this.succesor(currentNode)
                             const otherNode = currentNode.left
+                            const successorParent = this.succesorParent(currentNode)
 
                             if (currentNode.right.value != successorNode.value) {
                                 if (successorNode.right) {
-                                    const successorParent = this.succesorParent(currentNode)
                                     const succesorChild =  successorNode.right
                                     successorParent.left = succesorChild
+                                } else {
+                                    successorParent.left = null
                                 }
                                 successorNode.right = currentNode.right
                             }
@@ -207,6 +212,7 @@ class BinarySearchTree {
 
     bypass(node) {
         let currentNode = node
+
         if (currentNode.right) {
             currentNode = currentNode.right
             return currentNode
@@ -241,9 +247,10 @@ newBST.insert(34)
 newBST.insert(49)
 newBST.insert(60)
 newBST.insert(57)
+
 newBST.remove(30)
 newBST.remove(55)
 newBST.remove(51)
 newBST.remove(70)
-console.log(newBST.root.right)
-// console.log(newBST.root.left.right)
+
+console.log(newBST.root.left.right.right.left)
