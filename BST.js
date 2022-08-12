@@ -13,7 +13,7 @@ class BinarySearchTree {
 
     insert(value) {
         const newNode = new Node(value)
-        
+
         if (!this.root) {
             this.root = newNode
             // return this
@@ -253,4 +253,4 @@ newBST.remove(55)
 newBST.remove(51)
 newBST.remove(70)
 
-console.log(newBST.root.left.right.right.left)
+console.log(newBST)
